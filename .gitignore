@@ -15,3 +15,5 @@ apps/api/seed/output/
 
 # Ignore all dot-directories (tool/editor config dirs)
 .*/
+
+slides/pitch-deck/
