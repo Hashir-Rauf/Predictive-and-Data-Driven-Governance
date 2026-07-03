@@ -14,7 +14,7 @@ export interface Env {
 
   // Secrets — set via `wrangler secret put`, never committed.
   JWT_SIGNING_KEY: string;
-  ANTHROPIC_API_KEY?: string;
+  GEMINI_API_KEY?: string;
 }
 
 export interface ComputePartitionMessage {

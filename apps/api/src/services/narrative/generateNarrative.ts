@@ -1,12 +1,12 @@
 import type { NarrativeResult } from "@gov-dashboard/shared-types";
 import { getCachedNarrative, saveNarrative } from "../../db/queries/narrativeCache";
 import { sha256Hex } from "../../lib/hash";
-import { generateNarrativeText } from "./claudeClient";
+import { generateNarrativeText } from "./geminiClient";
 import { verifyGrounding } from "./groundingGuard";
 import { buildTemplateNarrative } from "./narrativeTemplates";
 import { buildNarrativePrompt, type NarrativeContext } from "./promptBuilder";
 
-const MODEL_NAME = "claude-haiku-4-5-20251001";
+const MODEL_NAME = "gemini-2.5-flash";
 
 /**
  * Checks the cache, then tries the model with the grounding guard, and
@@ -17,7 +17,7 @@ const MODEL_NAME = "claude-haiku-4-5-20251001";
 export async function generateNarrative(
   db: D1Database,
   ctx: NarrativeContext,
-  anthropicApiKey: string | undefined
+  geminiApiKey: string | undefined
 ): Promise<NarrativeResult> {
   const { system, user } = buildNarrativePrompt(ctx);
   const promptHash = await sha256Hex(`${system}\n${user}`);
@@ -28,8 +28,8 @@ export async function generateNarrative(
   let text: string | null = null;
   let source: "model" | "template" = "template";
 
-  if (anthropicApiKey) {
-    const modelText = await generateNarrativeText(anthropicApiKey, system, user);
+  if (geminiApiKey) {
+    const modelText = await generateNarrativeText(geminiApiKey, system, user);
     if (modelText && verifyGrounding(modelText, ctx.facts)) {
       text = modelText;
       source = "model";

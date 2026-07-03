@@ -185,7 +185,7 @@ narrative.post(
 
     if (!ctx) return fail(c, "insufficient_data", "Not enough data to generate a narrative", 409);
 
-    const result = await generateNarrative(c.env.DB, ctx, c.env.ANTHROPIC_API_KEY);
+    const result = await generateNarrative(c.env.DB, ctx, c.env.GEMINI_API_KEY);
     return ok(c, result);
   }
 );
@@ -230,7 +230,7 @@ narrative.get("/:entityType/:entityId", async (c) => {
   );
   if (!ctx) return fail(c, "insufficient_data", "Not enough data to generate a narrative", 409);
 
-  const result = await generateNarrative(c.env.DB, ctx, c.env.ANTHROPIC_API_KEY);
+  const result = await generateNarrative(c.env.DB, ctx, c.env.GEMINI_API_KEY);
   return ok(c, result);
 });
 

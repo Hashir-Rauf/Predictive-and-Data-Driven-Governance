@@ -18,6 +18,8 @@ import { requireAuth, type AppEnv } from "../middleware/auth";
 import { parseQueryParams } from "../middleware/validate";
 
 const DEFAULT_WINDOW_DAYS = 90;
+const SERIES_CACHE_TTL_SECONDS = 120;
+const BILLING_CACHE_TTL_SECONDS = 120;
 
 const metrics = new Hono<AppEnv>();
 metrics.use("*", requireAuth);
@@ -38,6 +40,10 @@ metrics.get("/service-requests", async (c) => {
   const regionId = agencyId === undefined ? narrowRegionId(scope, parsed.data.regionId) : undefined;
   if (agencyId === -1 || regionId === -1) return fail(c, "forbidden", "Outside your scope", 403);
 
+  const cacheKey = `metrics:service-requests:${agencyId ?? ""}:${regionId ?? ""}:${parsed.data.from ?? ""}:${parsed.data.to ?? ""}`;
+  const cached = await c.env.CACHE.get(cacheKey, "json");
+  if (cached) return ok(c, cached);
+
   const toDate = parsed.data.to ?? (await getMostRecentMetricDate(c.env.DB)) ?? new Date().toISOString().slice(0, 10);
   const fromDate = parsed.data.from ?? addDaysIso(toDate, -DEFAULT_WINDOW_DAYS);
 
@@ -52,7 +58,9 @@ metrics.get("/service-requests", async (c) => {
     })
   );
 
-  return ok(c, { fromDate, toDate, series });
+  const result = { fromDate, toDate, series };
+  await c.env.CACHE.put(cacheKey, JSON.stringify(result), { expirationTtl: SERIES_CACHE_TTL_SECONDS });
+  return ok(c, result);
 });
 
 metrics.get("/utility-billing", async (c) => {
@@ -64,8 +72,14 @@ metrics.get("/utility-billing", async (c) => {
   const regionId = agencyId === undefined ? narrowRegionId(scope, parsed.data.regionId) : undefined;
   if (agencyId === -1 || regionId === -1) return fail(c, "forbidden", "Outside your scope", 403);
 
+  const cacheKey = `metrics:utility-billing:${agencyId ?? ""}:${regionId ?? ""}`;
+  const cached = await c.env.CACHE.get(cacheKey, "json");
+  if (cached) return ok(c, cached);
+
   if (agencyId !== undefined) {
-    return ok(c, await getUtilityBillingForAgency(c.env.DB, agencyId));
+    const billing = await getUtilityBillingForAgency(c.env.DB, agencyId);
+    await c.env.CACHE.put(cacheKey, JSON.stringify(billing), { expirationTtl: BILLING_CACHE_TTL_SECONDS });
+    return ok(c, billing);
   }
 
   const sectorFilters = ["utilities_water", "utilities_power"] as const;
@@ -73,9 +87,10 @@ metrics.get("/utility-billing", async (c) => {
     sectorFilters.map((sector) => listAgencies(c.env.DB, { regionId, sector }))
   );
   const utilityAgencies = results.flat();
-  const billing = await Promise.all(utilityAgencies.map((a) => getUtilityBillingForAgency(c.env.DB, a.id)));
+  const billing = (await Promise.all(utilityAgencies.map((a) => getUtilityBillingForAgency(c.env.DB, a.id)))).flat();
 
-  return ok(c, billing.flat());
+  await c.env.CACHE.put(cacheKey, JSON.stringify(billing), { expirationTtl: BILLING_CACHE_TTL_SECONDS });
+  return ok(c, billing);
 });
 
 const budgetQuerySchema = z.object({

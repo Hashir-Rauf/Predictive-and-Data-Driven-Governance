@@ -10,7 +10,7 @@ Rather than building a shallow slice of every listed idea (chatbot + workflow au
 
 The user's standing constraints for this build: frontend and backend must be genuinely segregated (not just folders), a real middleware layer is required, the app must have no OWASP-class vulnerabilities, parallel/distributed computing should be used where it authentically fits (not forced), and the result must read as a serious, credible tool — no emoji, no em dashes, no decorative "status light" UI, no generic AI-slop template look. Deliverable is a working MVP plus pitch materials.
 
-Stack decision (made with user): Cloudflare edge stack — Workers for the API/middleware, D1 for relational data, KV for caching, Queues + one Durable Object for the parallel-compute/coordination piece, Claude (Anthropic API) for the narrative layer. Data: realistic synthetic Uzbekistan public-sector data, with a real integration-adapter boundary where my.gov.uz/digital-ID would plug in later.
+Stack decision (made with user): Cloudflare edge stack — Workers for the API/middleware, D1 for relational data, KV for caching, Queues + one Durable Object for the parallel-compute/coordination piece, Gemini (Google AI API) for the narrative layer. Data: realistic synthetic Uzbekistan public-sector data, with a real integration-adapter boundary where my.gov.uz/digital-ID would plug in later.
 
 ---
 
@@ -22,7 +22,7 @@ apps/web  (Vite + React SPA, deployed to Cloudflare Pages)
    v
 apps/api  (Cloudflare Worker — the only thing that touches data)
    |  middleware: auth (JWT) -> RBAC -> zod validation -> rate limiting -> route handler
-   |  services: forecasting (Holt-Winters/SES), anomaly detection (z-score/IQR), narrative (Claude + grounding guard)
+   |  services: forecasting (Holt-Winters/SES), anomaly detection (z-score/IQR), narrative (Gemini + grounding guard)
    |  parallel compute: Queues fan-out per region/agency partition (nightly recompute),
    |                     Promise.all for bounded on-demand recompute,
    |                     one Durable Object (JobCoordinator) for job-completion coordination
@@ -106,7 +106,7 @@ Per-region/per-agency computation is independent and stateless — exactly the c
 The model narrates numbers already computed — it never computes or invents numbers.
 
 1. `promptBuilder.ts` serializes only the exact computed values (forecast/CI, anomaly observed/expected/score, entity names, dates) into a grounding JSON block, instructing the model to use only those numbers.
-2. `claudeClient.ts` calls the Anthropic API (Haiku, temp ~0.2-0.3) per locale (uz/ru/en, formal register system prompts).
+2. `geminiClient.ts` calls the Gemini API (gemini-2.5-flash, temp ~0.2-0.3) per locale (uz/ru/en, formal register system prompts).
 3. `groundingGuard.ts` extracts every numeric token from the model's output and verifies it appears in the grounding JSON (rounding-tolerant). Any unverified number → discard the LLM output, serve `narrativeTemplates.ts` (deterministic per-locale string interpolation from the same grounding JSON). This makes "AI transparency" a mechanism, and guarantees the demo survives an API outage on stage.
 4. Every narrative is cached in `narrative_cache` with its grounding JSON; the UI always renders a "numbers behind this" panel next to the prose.
 
@@ -124,7 +124,7 @@ RBAC is enforced server-side by injecting `WHERE region_id = ?` from the JWT cla
 
 ## 7. Security (OWASP Top 10, mapped concretely)
 
-Parameterized D1 everywhere (no string-built SQL); zod validation before any handler logic; secrets (JWT signing key, Anthropic key) via Wrangler Secrets Store, never in `wrangler.jsonc`; refresh tokens stored as hashes; CSP + `X-Content-Type-Options` + `Referrer-Policy` + `Permissions-Policy` + HSTS via `securityHeaders.ts`; token-bucket rate limiting on auth and narrative-generation routes; `audit_log` for auth events, anomaly status changes, admin actions (no PII or full IDs logged — `external_id_hash` only); no user-controlled outbound fetch anywhere (rules out SSRF); minimal dependency surface by design.
+Parameterized D1 everywhere (no string-built SQL); zod validation before any handler logic; secrets (JWT signing key, Gemini key) via Wrangler Secrets Store, never in `wrangler.jsonc`; refresh tokens stored as hashes; CSP + `X-Content-Type-Options` + `Referrer-Policy` + `Permissions-Policy` + HSTS via `securityHeaders.ts`; token-bucket rate limiting on auth and narrative-generation routes; `audit_log` for auth events, anomaly status changes, admin actions (no PII or full IDs logged — `external_id_hash` only); no user-controlled outbound fetch anywhere (rules out SSRF); minimal dependency surface by design.
 
 **Data localization** — stated honestly rather than overclaimed: the hackathon demo runs on Cloudflare's network; the design supports localization because D1 is the single system of record behind the Worker (client never touches it directly) and every external integration is isolated behind an adapter interface — a production rollout would pin the authoritative store to in-country infrastructure with Workers as a stateless edge layer in front of it. This goes in `docs/ARCHITECTURE.md` and the security slide, not glossed over.
 
@@ -176,4 +176,4 @@ Built with the `slides` skill into `slides/pitch-deck/index.html`, reusing `apps
 ### Notes for build time
 - Confirm exact Wrangler config field names (Queues/DO/D1 bindings) and Cloudflare's current rate-limiting binding name against live docs — the `cloudflare`/`wrangler`/`durable-objects` skills should be consulted directly rather than relying on memorized syntax, since these APIs shift.
 - Local development (`wrangler dev`, `d1 migrations apply --local`) does not require a Cloudflare account; deploying a live URL for the demo does — run `wrangler login` when ready to deploy.
-- The narrative layer requires an Anthropic API key at deploy time for live LLM output; the template fallback means the app is still fully functional and demoable without one.
+- The narrative layer requires a Gemini API key at deploy time for live LLM output; the template fallback means the app is still fully functional and demoable without one.
