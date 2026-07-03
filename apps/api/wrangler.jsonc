@@ -9,24 +9,21 @@
   },
 
   "vars": {
-    "ENVIRONMENT": "development",
-    "ALLOWED_ORIGIN": "http://localhost:5173"
+    "ENVIRONMENT": "production",
+    "ALLOWED_ORIGIN": "https://gov-dashboard-web.pages.dev"
   },
 
-  // Replace database_id with the output of `wrangler d1 create gov-dashboard`
-  // once a Cloudflare account is connected. A placeholder value is fine for
-  // local-only development (`wrangler dev` / `--local` migrations).
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "gov-dashboard",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "7eca7fef-e21c-46f0-847f-36f526ffa71c",
       "migrations_dir": "./migrations"
     }
   ],
 
   "kv_namespaces": [
-    { "binding": "CACHE", "id": "00000000000000000000000000000000" }
+    { "binding": "CACHE", "id": "a329905f205746098dd118d2ccc259b8" }
   ],
 
   "queues": {

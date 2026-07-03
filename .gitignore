@@ -12,3 +12,6 @@ npm-debug.log*
 coverage/
 .vite/
 apps/api/seed/output/
+
+# Ignore all dot-directories (tool/editor config dirs)
+.*/

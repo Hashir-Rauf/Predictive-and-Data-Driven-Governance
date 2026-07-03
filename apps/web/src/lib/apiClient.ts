@@ -28,6 +28,8 @@ interface RequestOptions {
   query?: Record<string, string | number | boolean | undefined>;
 }
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "";
+
 function buildUrl(path: string, query?: RequestOptions["query"]): string {
   const url = new URL(path, window.location.origin);
   if (query) {
@@ -35,7 +37,7 @@ function buildUrl(path: string, query?: RequestOptions["query"]): string {
       if (value !== undefined) url.searchParams.set(key, String(value));
     }
   }
-  return url.pathname + url.search;
+  return API_BASE_URL + url.pathname + url.search;
 }
 
 /**

@@ -85,20 +85,20 @@ This system explicitly rejects: gradient hero treatments, glassmorphism, bento-g
 
 ## 2. Colors
 
-A near-monochrome paper-and-ink base with exactly one functional accent and a fixed four-step status scale that is never reused for anything else.
+A cool near-monochrome base (modern product neutrals, not warm paper — the earlier cream substrate was retired as dated) with exactly one functional accent and a fixed four-step status scale that is never reused for anything else.
 
 ### Primary
-- **Instrument Blue** (#2a78d6): the single interactive/accent color. Active nav state, links, primary chart series, focus rings, hover state on primary buttons. Never expanded into a secondary decorative palette.
+- **Instrument Blue** (#2563eb): the single interactive/accent color. Active nav state, links, primary chart series, focus rings, hover state on primary buttons. Never expanded into a secondary decorative palette. The chart sequential ramp is anchored on this same family so chrome and data share one blue.
 
 ### Neutral
-- **Document Paper** (#eae8e3): page background. The matte "substrate" everything else sits on.
-- **Clean Sheet** (#fcfcfb): card/panel surface, one step lighter than the page, indicating a hairline-bordered content region.
-- **Sheet Raised** (#ffffff): the rare fully-white surface, reserved for popover/elevated content (e.g. locale switcher active state background via ink, not white-on-white).
-- **Carbon Ink** (#0b0b0b): primary text, headers, primary button fill.
-- **Graphite** (#52514e): secondary text, subtitles, body copy that isn't the primary read.
-- **Pencil Gray** (#898781): muted text, placeholder-equivalent, least-important labels.
-- **Hairline Rule** (#e1e0d9): the default divider weight, used constantly.
-- **Structural Line** (#c3c2b7): a stronger divider for primary structural boundaries (page header underline, table header rule, select/input borders).
+- **Cool Canvas** (#f4f5f7): page background. A cool light gray substrate everything else sits on.
+- **Clean Sheet** (#ffffff): card/panel surface, one step lighter than the page, indicating a bordered content region.
+- **Sheet Wash** (#f3f5f8): hover/selected wash on rows, tiles, and persona buttons.
+- **Carbon Ink** (#0e1116): primary text, headers, the masthead, primary button fill.
+- **Graphite** (#4b5563): secondary text, subtitles, body copy that isn't the primary read.
+- **Pencil Gray** (#8b93a1): muted text, placeholder-equivalent, least-important labels.
+- **Hairline Rule** (#e5e8ed): the default divider weight, used constantly.
+- **Structural Line** (#d3d8e0): a stronger divider for primary structural boundaries (table header rule, select/input borders, panel borders).
 
 ### Status (fixed; never themed, never reused as a categorical color)
 - **Good** (#0ca30c) · **Warning** (#fab219) · **Serious** (#ec835a) · **Critical** (#d03b3b): anomaly severity only. Always rendered as a bordered mono-label chip with a small square icon plus text, never a bare colored dot.
