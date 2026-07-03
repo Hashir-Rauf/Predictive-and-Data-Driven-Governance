@@ -1,0 +1,129 @@
+/*
+  Design tokens — light-only structural system (see apps/web/DESIGN.md).
+  History: started on the dataviz reference palette's warm paper substrate
+  and #2a78d6 blue; both were replaced at the user's direction with cool
+  modern neutrals and a contemporary saturated blue (#2563eb), because the
+  warm-cream band read as dated. The dataviz METHOD still applies unchanged
+  (single-hue sequential ramp, fixed status palette reserved for severity,
+  no display face on figures) — only the parameter values were re-anchored
+  to the new blue family, per the skill's own "swap the palette file's
+  values for your brand's" instruction.
+
+  Status palette stays verbatim from the dataviz reference (validated
+  contrast, distinct from the series family). Headers use a heavy weight of
+  the system sans stack, not a bundled display face.
+*/
+
+:root {
+  /* ---- Structural chrome: cool modern neutrals, light-only.
+     The earlier warm paper band (#eae8e3) read as the dated "cream"
+     default; this is the same structural system on a cool axis. ---- */
+  --color-bg-page: #f4f5f7;
+  --color-bg-surface: #ffffff;
+  --color-bg-surface-raised: #f3f5f8;
+  --color-ink-primary: #0e1116;
+  --color-ink-secondary: #4b5563;
+  --color-ink-muted: #8b93a1;
+  --color-hairline: #e5e8ed;
+  --color-border: #d3d8e0;
+  --color-accent: #2563eb;
+  --color-accent-ink: #ffffff;
+  --color-focus-ring: #2563eb;
+
+  /* Ink-inverse: text colors for content sitting ON the black masthead.
+     This is chrome, not a dark mode — the content area stays light-only. */
+  --color-on-ink-primary: #f7f8fa;
+  --color-on-ink-secondary: #99a1ac;
+  --color-on-ink-hairline: #262b33;
+
+  /* ---- Status palette (fixed, reserved for anomaly severity only) ---- */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+  --status-good-text: #006300;
+
+  /* ---- Categorical series (fixed order, never cycled/reassigned).
+     Slot 1 tracks the accent family; other slots keep the dataviz
+     reference hues (unused by current charts, reserved). ---- */
+  --series-1: #2563eb; /* blue */
+  --series-2: #1baf7a; /* aqua */
+  --series-3: #eda100; /* yellow */
+  --series-4: #008300; /* green */
+  --series-5: #4a3aa7; /* violet */
+  --series-6: #e34948; /* red */
+  --series-7: #e87ba4; /* magenta */
+  --series-8: #eb6834; /* orange */
+
+  /* ---- Sequential ramp (single hue, magnitude), re-anchored on the
+     accent blue family so charts and chrome share one blue ---- */
+  --seq-100: #dbeafe;
+  --seq-150: #cfe0fc;
+  --seq-200: #bfdbfe;
+  --seq-250: #a4c6fb;
+  --seq-300: #93c5fd;
+  --seq-350: #7ab0fa;
+  --seq-400: #60a5fa;
+  --seq-450: #3b82f6;
+  --seq-500: #2563eb;
+  --seq-550: #1d4ed8;
+  --seq-600: #1e40af;
+  --seq-650: #1e3a8a;
+  --seq-700: #172e75;
+
+  /* ---- Diverging pair (blue <-> red, neutral midpoint gray) ---- */
+  --div-cool: #2563eb;
+  --div-warm: #dc2626;
+  --div-mid: #eef0f3;
+
+  /* ---- Chart surface + gridlines ---- */
+  --chart-surface: #ffffff;
+  --chart-gridline: #e5e8ed;
+  --chart-baseline: #d3d8e0;
+
+  /* ---- Type ---- */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* Fixed rem scale (no fluid clamp): product UI is viewed at consistent
+     DPI and a page title that resizes with the viewport reads as a
+     marketing hero, not an instrument. Ratio ~1.2 between steps. */
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.06em;
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.3;
+  --leading-normal: 1.5;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-heavy: 800;
+
+  /* ---- Spacing scale (8px base) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ---- Geometry ---- */
+  --radius: 0;
+  --shadow-hard: 2px 2px 0 0 var(--color-ink-primary);
+  --border-hairline: 1px solid var(--color-hairline);
+  --border-strong: 1px solid var(--color-border);
+
+  --grid-max-width: 1440px;
+}

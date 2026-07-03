@@ -1,0 +1,28 @@
+.drilldown-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.drilldown-panel--wide {
+  grid-column: 1 / -1;
+}
+
+.drilldown-panel__title {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-ink-primary);
+}
+
+.drilldown-rate[data-low="true"] {
+  color: var(--status-critical);
+  font-weight: var(--font-weight-semibold);
+}
+
+@media (max-width: 1100px) {
+  .drilldown-grid {
+    grid-template-columns: 1fr;
+  }
+}

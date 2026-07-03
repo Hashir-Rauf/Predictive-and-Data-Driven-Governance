@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.wrangler/
+.env
+.env.*
+!.env.example
+.dev.vars
+*.local
+.DS_Store
+npm-debug.log*
+coverage/
+.vite/
+apps/api/seed/output/

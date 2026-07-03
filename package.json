@@ -1,0 +1,22 @@
+{
+  "name": "gov-dashboard",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Predictive governance dashboard for Uzbekistan public services (IT Park Uzbekistan hackathon submission)",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev -w apps/api",
+    "dev:web": "npm run dev -w apps/web",
+    "build:web": "npm run build -w apps/web",
+    "test:api": "npm run test -w apps/api",
+    "typecheck": "npm run typecheck -w packages/shared-types && npm run typecheck -w apps/api && npm run typecheck -w apps/web",
+    "db:migrate:local": "npm run db:migrate:local -w apps/api",
+    "db:seed:local": "npm run db:seed:local -w apps/api"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

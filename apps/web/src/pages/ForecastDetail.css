@@ -1,0 +1,28 @@
+.forecast-detail-method {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1px;
+  background: var(--color-hairline);
+  border: var(--border-hairline);
+  border-top: none;
+  margin-bottom: var(--space-6);
+}
+
+.forecast-detail-method > div {
+  background: var(--color-bg-surface);
+  padding: var(--space-3) var(--space-4);
+}
+
+.forecast-detail-method p {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  overflow-wrap: anywhere;
+}
+
+.forecast-detail-explain {
+  margin-bottom: var(--space-4);
+}
+
+.forecast-detail-narrative {
+  max-width: 42rem;
+}

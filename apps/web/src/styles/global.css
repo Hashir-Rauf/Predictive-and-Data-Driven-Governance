@@ -1,0 +1,275 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg-page);
+  color: var(--color-ink-primary);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: var(--font-weight-heavy);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  text-transform: uppercase;
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0;
+}
+
+p {
+  max-width: 72ch;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* ---- Shared control vocabulary. One button, one select, one panel:
+   identical on every screen. Per-page CSS must not restyle these. ---- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-primary);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-ink-primary);
+  padding: var(--space-3) var(--space-4);
+  transition: background 0.15s ease-out, color 0.15s ease-out;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--color-ink-primary);
+  color: var(--color-bg-surface);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--color-ink-primary);
+  color: var(--color-bg-surface);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.btn--small {
+  padding: var(--space-1) var(--space-2);
+  border-color: var(--color-border);
+  color: var(--color-ink-secondary);
+}
+
+.btn--small:hover:not(:disabled) {
+  border-color: var(--color-ink-primary);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.field select {
+  border: var(--border-strong);
+  background: var(--color-bg-surface);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  min-width: 12rem;
+  transition: border-color 0.15s ease-out;
+}
+
+.field select:hover {
+  border-color: var(--color-ink-primary);
+}
+
+/* A bordered content region on the page background. Charts MUST sit inside
+   one: hairline gridlines are nearly invisible against the tinted page
+   background and only read correctly on the white surface. */
+.panel {
+  background: var(--color-bg-surface);
+  border: var(--border-strong);
+  padding: var(--space-4) var(--space-6) var(--space-6);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: var(--border-hairline);
+}
+
+.empty-state {
+  border: 1px dashed var(--color-border);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+
+.error-text {
+  color: var(--status-critical);
+  font-size: var(--text-sm);
+}
+
+/* Monospace treatment for identifiers, timestamps, codes — never for prose. */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-secondary);
+}
+
+/* Status badge: icon + label, always. A bare colored dot never carries meaning alone. */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid currentColor;
+}
+
+.status-badge[data-severity="good"] {
+  color: var(--status-good-text);
+}
+.status-badge[data-severity="warning"] {
+  color: #8a6200;
+}
+.status-badge[data-severity="serious"] {
+  color: #a04a2e;
+}
+.status-badge[data-severity="critical"] {
+  color: var(--status-critical);
+}
+
+.status-badge__icon {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: currentColor;
+}
+
+/* Data tables: one vocabulary for every screen. */
+.data-table {
+  width: 100%;
+  background: var(--color-bg-surface);
+  border: var(--border-hairline);
+}
+
+.data-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--color-ink-primary);
+}
+
+.data-table td {
+  padding: var(--space-2) var(--space-3);
+  border-bottom: var(--border-hairline);
+  font-size: var(--text-sm);
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+  background: var(--color-bg-surface-raised);
+}
+
+.app-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

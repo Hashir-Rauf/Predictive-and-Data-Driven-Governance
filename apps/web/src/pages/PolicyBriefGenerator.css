@@ -1,0 +1,72 @@
+.policy-brief-locked-region {
+  border: var(--border-hairline);
+  background: var(--color-bg-page);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  min-width: 12rem;
+  color: var(--color-ink-secondary);
+}
+
+.policy-brief-error {
+  margin-bottom: var(--space-6);
+}
+
+.policy-brief {
+  max-width: 46rem;
+}
+
+.policy-brief__header {
+  border-bottom: 2px solid var(--color-ink-primary);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.policy-brief__header h2 {
+  font-size: var(--text-lg);
+}
+
+.policy-brief__header p {
+  margin-top: var(--space-2);
+  color: var(--color-ink-muted);
+}
+
+.policy-brief__section {
+  margin-bottom: var(--space-8);
+}
+
+.policy-brief__section:last-child {
+  margin-bottom: 0;
+}
+
+.policy-brief__section h3 {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-3);
+}
+
+.policy-brief__anomaly {
+  border-top: var(--border-hairline);
+  padding-top: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.policy-brief__anomaly-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+@media print {
+  .app-shell__header,
+  .app-shell__context-bar,
+  .filter-row,
+  .page-header__actions {
+    display: none;
+  }
+
+  .policy-brief {
+    border: none;
+    padding: 0;
+    max-width: none;
+  }
+}

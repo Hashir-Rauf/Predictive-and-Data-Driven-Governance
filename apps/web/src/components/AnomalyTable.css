@@ -1,0 +1,19 @@
+.anomaly-table__num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.anomaly-table__detail {
+  background: var(--color-bg-page);
+  padding: var(--space-4) var(--space-6);
+}
+
+.anomaly-table__detail p {
+  max-width: 64ch;
+}
+
+.anomaly-table__actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}

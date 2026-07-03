@@ -1,0 +1,52 @@
+.admin-panel {
+  margin-bottom: var(--space-6);
+}
+
+.admin-panel__title {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 2px solid var(--color-ink-primary);
+}
+
+.admin-panel__description {
+  color: var(--color-ink-secondary);
+  font-size: var(--text-sm);
+  max-width: 64ch;
+  margin-bottom: var(--space-4);
+}
+
+.admin-job-status {
+  margin-top: var(--space-4);
+  max-width: 28rem;
+}
+
+.admin-job-status__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.admin-job-status__row [data-status="complete"] {
+  color: var(--status-good-text);
+}
+.admin-job-status__row [data-status="running"] {
+  color: var(--color-accent);
+}
+.admin-job-status__row [data-status="failed"] {
+  color: var(--status-critical);
+}
+
+.admin-job-status__bar {
+  height: 8px;
+  background: var(--seq-100);
+  margin-bottom: var(--space-2);
+}
+
+.admin-job-status__bar-fill {
+  height: 100%;
+  width: 100%;
+  background: var(--seq-450);
+  transform-origin: left;
+  transition: transform 0.3s ease-out;
+}

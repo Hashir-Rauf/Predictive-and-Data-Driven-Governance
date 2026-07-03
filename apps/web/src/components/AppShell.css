@@ -1,0 +1,219 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ink masthead: the one heavy structural element on every screen. The
+   header inner content shares the exact container of the page content
+   (same max-width, same horizontal padding) so the brand mark, nav, and
+   page title all sit on one vertical grid line. */
+.app-shell__header {
+  background: var(--color-ink-primary);
+}
+
+.app-shell__header-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-8);
+  min-height: 64px;
+}
+
+.app-shell__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: var(--space-8);
+  border-right: 1px solid var(--color-on-ink-hairline);
+}
+
+.app-shell__mark {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  display: block;
+}
+
+.app-shell__title {
+  font-weight: var(--font-weight-heavy);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  white-space: normal;
+  line-height: 1.15;
+  max-width: 11rem;
+  color: var(--color-on-ink-primary);
+}
+
+.app-shell__nav {
+  display: flex;
+  gap: var(--space-6);
+  flex: 1;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.app-shell__nav-link {
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-on-ink-secondary);
+  border-bottom: 3px solid transparent;
+  border-top: 3px solid transparent; /* balances the bottom rule so text stays vertically centered */
+  white-space: nowrap;
+  transition: color 0.15s ease-out;
+}
+
+.app-shell__nav-link:hover {
+  color: var(--color-on-ink-primary);
+}
+
+.app-shell__nav-link.is-active {
+  color: var(--color-on-ink-primary);
+  border-bottom-color: var(--color-accent);
+}
+
+.app-shell__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.app-shell__logout {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-on-ink-secondary);
+  border: 1px solid var(--color-on-ink-hairline);
+  padding: var(--space-2) var(--space-3);
+  transition: background 0.15s ease-out, color 0.15s ease-out;
+}
+
+.app-shell__logout:hover {
+  background: var(--color-on-ink-primary);
+  color: var(--color-ink-primary);
+  border-color: var(--color-on-ink-primary);
+}
+
+.app-shell__logout:active {
+  transform: translateY(1px);
+}
+
+/* Signed-in context strip: who is viewing, at what scope. Real state, not chrome. */
+.app-shell__context-bar {
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-shell__context-inner {
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-6);
+  display: flex;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.app-shell__context-user {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-primary);
+}
+
+.app-shell__context-role {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.app-shell__main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-16);
+}
+
+.locale-switcher {
+  display: flex;
+  border: 1px solid var(--color-on-ink-hairline);
+}
+
+.locale-switcher__option {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-on-ink-secondary);
+  border-left: 1px solid var(--color-on-ink-hairline);
+  transition: background 0.15s ease-out, color 0.15s ease-out;
+}
+
+.locale-switcher__option:first-child {
+  border-left: none;
+}
+
+.locale-switcher__option:hover {
+  color: var(--color-on-ink-primary);
+}
+
+.locale-switcher__option[data-active="true"] {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+@media (max-width: 1000px) {
+  .app-shell__header-inner {
+    flex-wrap: wrap;
+    padding-top: var(--space-3);
+    padding-bottom: var(--space-3);
+    gap: var(--space-4);
+  }
+
+  .app-shell__brand {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .app-shell__nav {
+    order: 3;
+    flex-basis: 100%;
+    border-top: 1px solid var(--color-on-ink-hairline);
+    padding-top: var(--space-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .app-shell__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .app-shell__nav-link {
+    padding: var(--space-2) 0;
+  }
+
+  .app-shell__actions {
+    margin-left: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell__nav-link,
+  .app-shell__logout,
+  .locale-switcher__option {
+    transition: none;
+  }
+}
